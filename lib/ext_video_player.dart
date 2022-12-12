@@ -3,21 +3,18 @@
 // found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
 import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+
+import 'src/closed_caption_file.dart';
 
 export 'package:video_player_platform_interface/video_player_platform_interface.dart'
     show DurationRange, DataSourceType, VideoFormat, VideoPlayerOptions;
 
-import 'src/closed_caption_file.dart';
 export 'src/closed_caption_file.dart';
 
 final VideoPlayerPlatform _videoPlayerPlatform = VideoPlayerPlatform.instance
@@ -386,7 +383,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
       RegExp(r'^https:\/\/youtu\.be\/([_\-a-zA-Z0-9]{11}).*$')
     ];
 
-    if (url == null || url.isEmpty) {
+    if (url.isEmpty) {
       return null;
     }
 
@@ -610,7 +607,7 @@ class _VideoAppLifeCycleObserver extends Object with WidgetsBindingObserver {
   final VideoPlayerController _controller;
 
   void initialize() {
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -630,7 +627,7 @@ class _VideoAppLifeCycleObserver extends Object with WidgetsBindingObserver {
   }
 
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
   }
 }
 
