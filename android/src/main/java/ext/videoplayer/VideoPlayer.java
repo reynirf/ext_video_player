@@ -167,10 +167,10 @@ final class VideoPlayer {
     setAudioAttributes(exoPlayer, options.mixWithOthers);
 
    exoPlayer.addListener(
-    new Listener() {
+    new Player.Listener() {
 
       @Override
-      public void onPlaybackStateChanged(final int playbackState) {
+      public void onPlaybackStateChanged(int playbackState) {
         if (playbackState == Player.STATE_BUFFERING) {
           sendBufferingUpdate();
         } else if (playbackState == Player.STATE_READY) {
@@ -186,13 +186,13 @@ final class VideoPlayer {
       }
 
       @Override
-      public void onPlayerError(final ExoPlaybackException error) {
+      public void onPlayerError(PlaybackException error) {  // Use PlaybackException if you're using the updated version
         if (eventSink != null) {
           eventSink.error("VideoError", "Video player had error " + error, null);
         }
       }
-    } 
-  );  
+    }
+);
   }
 
   void sendBufferingUpdate() {
