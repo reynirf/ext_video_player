@@ -5,8 +5,8 @@ def args = ["-Xlint:deprecation","-Xlint:unchecked","-Werror"]
 buildscript {
     repositories {
         google()
-        jcenter()
         mavenCentral() // Ensure this is present
+        jcenter()
         maven { url 'https://jitpack.io' } // For additional dependencies
     }
 
@@ -18,8 +18,8 @@ buildscript {
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral() // Ensure this is present
+        jcenter()
         maven { url 'https://jitpack.io' } // For additional dependencies
     }
 }
