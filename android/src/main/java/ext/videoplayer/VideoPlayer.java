@@ -191,8 +191,9 @@ final class VideoPlayer {
           eventSink.error("VideoError", "Video player had error " + error, null);
         }
       }
-    }  // This closes the new Listener() object
-  );  // This closes the addListener method call
+    } 
+  );  
+  }
 
   void sendBufferingUpdate() {
     Map<String, Object> event = new HashMap<>();
