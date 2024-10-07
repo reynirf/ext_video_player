@@ -210,7 +210,7 @@ final class VideoPlayer {
       exoPlayer.setAudioAttributes(
               new AudioAttributes.Builder().setContentType(C.CONTENT_TYPE_MOVIE).build(), !isMixMode);
     } else {
-      exoPlayer.setAudioStreamType(C.STREAM_TYPE_MUSIC);
+      
     }
   }
 
