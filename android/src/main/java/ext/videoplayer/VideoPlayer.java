@@ -186,12 +186,13 @@ final class VideoPlayer {
       }
 
       @Override
-      public void onPlayerError(final PlaybackException error) { // Updated exception class
+      public void onPlayerError(final PlaybackException error) {
         if (eventSink != null) {
           eventSink.error("VideoError", "Video player had error " + error, null);
         }
       }
-    });
+    }  // This closes the new Listener() object
+  );  // This closes the addListener method call
 
   void sendBufferingUpdate() {
     Map<String, Object> event = new HashMap<>();
