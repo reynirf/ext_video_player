@@ -8,7 +8,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.view.Surface;
 import com.google.android.exoplayer2.C;
-import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.Player.Listener;
+import com.google.android.exoplayer2.PlaybackException; 
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -166,33 +167,32 @@ final class VideoPlayer {
     exoPlayer.setVideoSurface(surface);
     setAudioAttributes(exoPlayer, options.mixWithOthers);
 
-    exoPlayer.addListener(
-            new EventListener() {
+   exoPlayer.addListener(
+    new Listener() {
 
-              @Override
-              public void onPlaybackStateChanged(final int playbackState) {
-                if (playbackState == Player.STATE_BUFFERING) {
-                  sendBufferingUpdate();
-                } else if (playbackState == Player.STATE_READY) {
-                  if (!isInitialized) {
-                    isInitialized = true;
-                    sendInitialized();
-                  }
-                } else if (playbackState == Player.STATE_ENDED) {
-                  Map<String, Object> event = new HashMap<>();
-                  event.put("event", "completed");
-                  eventSink.success(event);
-                }
-              }
+      @Override
+      public void onPlaybackStateChanged(final int playbackState) {
+        if (playbackState == Player.STATE_BUFFERING) {
+          sendBufferingUpdate();
+        } else if (playbackState == Player.STATE_READY) {
+          if (!isInitialized) {
+            isInitialized = true;
+            sendInitialized();
+          }
+        } else if (playbackState == Player.STATE_ENDED) {
+          Map<String, Object> event = new HashMap<>();
+          event.put("event", "completed");
+          eventSink.success(event);
+        }
+      }
 
-              @Override
-              public void onPlayerError(final ExoPlaybackException error) {
-                if (eventSink != null) {
-                  eventSink.error("VideoError", "Video player had error " + error, null);
-                }
-              }
-            });
-  }
+      @Override
+      public void onPlayerError(final PlaybackException error) { // Updated exception class
+        if (eventSink != null) {
+          eventSink.error("VideoError", "Video player had error " + error, null);
+        }
+      }
+    });
 
   void sendBufferingUpdate() {
     Map<String, Object> event = new HashMap<>();
