@@ -25,6 +25,7 @@ import com.google.android.exoplayer2.source.smoothstreaming.DefaultSsChunkSource
 import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource.Factory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
@@ -73,13 +74,12 @@ final class VideoPlayer {
 
     DataSource.Factory dataSourceFactory;
     if (isHTTP(uri)) {
-      dataSourceFactory =
-              new DefaultHttpDataSourceFactory(
-                      "ExoPlayer",
-                      null,
-                      DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS,
-                      DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS,
-                      true);
+       dataSourceFactory = 
+        new DefaultHttpDataSource.Factory()
+            .setUserAgent("ExoPlayer")
+            .setConnectTimeoutMs(DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS)
+            .setReadTimeoutMs(DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS)
+            .setAllowCrossProtocolRedirects(true); // Same as passing true in the old constructor
     } else {
       dataSourceFactory = new DefaultDataSourceFactory(context, "ExoPlayer");
     }
