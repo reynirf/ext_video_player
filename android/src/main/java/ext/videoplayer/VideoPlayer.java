@@ -9,7 +9,7 @@ import android.os.Build;
 import android.view.Surface;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Player.Listener;
-import com.google.android.exoplayer2.PlaybackException; 
+import com.google.android.exoplayer2.ExoPlaybackException; 
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -186,7 +186,7 @@ final class VideoPlayer {
       }
 
       @Override
-      public void onPlayerError(final PlaybackException error) {
+      public void onPlayerError(final ExoPlaybackException error) {
         if (eventSink != null) {
           eventSink.error("VideoError", "Video player had error " + error, null);
         }
